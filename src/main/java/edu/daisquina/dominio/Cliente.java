@@ -1,5 +1,8 @@
 package edu.daisquina.dominio;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Cliente {
     private int id;
     private String nome;
@@ -7,10 +10,30 @@ public class Cliente {
     private String senha;
 
     public Cliente(int id, String nome, String email, String senha) {
+
+        Pattern formatoNome = Pattern.compile("(+*@email\\.com$)");
+        Matcher matcher = formatoNome.matcher(email.trim());
+
+        if(matcher.find()){
+            this.email = email;
+        }
+        else{ new IllegalArgumentException("Email inválido. Não segue os padrões");}
+
         this.id = id;
-        this.nome = nome;
-        this.email = email;
+        this.nome = nome.trim();
         this.senha = senha;
+    }
+
+    public void atualizar(String novoNome, String novoEmail, String novaSenha){
+
+        if(novoNome == null || novoNome.isBlank()) throw new IllegalArgumentException("Nome inválido");
+        if(novoEmail == null || novoEmail.isBlank()) throw new IllegalArgumentException("Email inválido");
+        if(novaSenha == null || novaSenha.isBlank()) throw new IllegalArgumentException("Senha inválida");
+
+        this.nome  = novoNome;
+        this.email = novoEmail;
+        this.senha = novaSenha;
+
     }
 
     public int getId() {

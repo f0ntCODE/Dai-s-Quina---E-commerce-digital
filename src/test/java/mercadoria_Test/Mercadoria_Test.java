@@ -1,4 +1,4 @@
-package Mercadoria_Test;
+package mercadoria_Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;

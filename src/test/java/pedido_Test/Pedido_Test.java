@@ -1,7 +1,6 @@
-package Pedido_Test;
+package pedido_Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -13,21 +12,17 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import edu.daisquina.dominio.Cliente;
 import edu.daisquina.dominio.Mercadoria;
 import edu.daisquina.dominio.Pedido;
-import edu.daisquina.service.MercadoriaService;
 import edu.daisquina.service.PedidoService;
 
 public class Pedido_Test {
 
     private PedidoService pedidoService;
-    private MercadoriaService mercadoriaService;
 
     @BeforeEach
     public void setup(){
         pedidoService = new PedidoService();
-        mercadoriaService = new MercadoriaService();
     }
 
     @Test
