@@ -12,17 +12,21 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import edu.daisquina.dominio.Categoria;
 import edu.daisquina.dominio.Mercadoria;
 import edu.daisquina.dominio.Pedido;
+import edu.daisquina.service.CategoriaService;
 import edu.daisquina.service.PedidoService;
 
 public class Pedido_Test {
 
     private PedidoService pedidoService;
+    private CategoriaService categoriaService;
 
     @BeforeEach
     public void setup(){
         pedidoService = new PedidoService();
+        categoriaService = new CategoriaService();
     }
 
     @Test
@@ -30,9 +34,13 @@ public class Pedido_Test {
 
     @Test
     public void UmPedidoDeveSerCriado(){
+
         String cliente = "Afonso";
-        Mercadoria mesa = new Mercadoria(1, "Mesa de madeira", "Mesa de madeira de cedro", 365.21);
-        Mercadoria fogao = new Mercadoria(1, "Fogão 4 bocas", "É um fogão", 124.75);
+        Categoria categoria = criarCategoria();
+
+        Mercadoria mesa = new Mercadoria(1, "Mesa de madeira", "Mesa de madeira de cedro", categoria, 365.21);
+
+        Mercadoria fogao = new Mercadoria(1, "Fogão 4 bocas", "É um fogão", categoria, 124.75);
 
         Set<Mercadoria> mercadorias = new HashSet<>();
         mercadorias.add(mesa);
@@ -64,9 +72,11 @@ public class Pedido_Test {
 
     @Test
     public void UmPedidoNaoPodeSerCriadoSemUmCliente(){
+        Categoria categoria = criarCategoria();
+
         Set<Mercadoria> mercadorias = new HashSet<>();
 
-        mercadorias.add(new Mercadoria(1, "Fogão 4 bocas", "É um fogão", 124.75));
+        mercadorias.add(new Mercadoria(1, "Fogão 4 bocas", "É um fogão", categoria, 124.75));
 
         assertThrows(IllegalArgumentException.class, () ->{
             pedidoService.criar(null, mercadorias);
@@ -76,9 +86,11 @@ public class Pedido_Test {
 
     @Test
     public void UmPedidoDeveSerExcluido(){
+
+        Categoria categoria = criarCategoria();
         Set<Mercadoria> mercadorias = new HashSet<>();
 
-        mercadorias.add(new Mercadoria(1, "Cadeira", "Para sentar", 89.80));
+        mercadorias.add(new Mercadoria(1, "Cadeira", "Para sentar", categoria, 89.80));
 
         String cliente = "Odair";
 
@@ -90,7 +102,7 @@ public class Pedido_Test {
     }
 
     //helper
-    public boolean encontrarStringNaLista(String nomeASerEncontrado, List<String> lista){
+    private boolean encontrarStringNaLista(String nomeASerEncontrado, List<String> lista){
 
         for(String nome : lista){
                 if(nome == nomeASerEncontrado){
@@ -99,6 +111,13 @@ public class Pedido_Test {
             }
 
             return false;
+    }
+
+    private Categoria criarCategoria(){
+        
+        Categoria categoria = categoriaService.criar("qualquer");
+
+        return categoria;
     }
 
 }

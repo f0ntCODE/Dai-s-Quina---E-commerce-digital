@@ -3,6 +3,7 @@ package edu.daisquina.service;
 import java.util.Optional;
 
 import edu.daisquina.banco.MercadoriaPersistencia;
+import edu.daisquina.dominio.Categoria;
 import edu.daisquina.dominio.Mercadoria;
 
 public class MercadoriaService {
@@ -18,9 +19,9 @@ public class MercadoriaService {
 
     }
 
-    public Mercadoria criar(String nome, String descricao, double preco){
+    public Mercadoria criar(String nome, String descricao, Categoria categoria, double preco){
 
-        Mercadoria novaMercadoria = new Mercadoria(id ++, nome, descricao, preco);
+        Mercadoria novaMercadoria = new Mercadoria(id ++, nome, descricao, categoria, preco);
         
         mercadoriaPersistencia.salvar(novaMercadoria);
 
@@ -34,12 +35,12 @@ public class MercadoriaService {
 
     }
 
-    public Mercadoria editar(int id, String nome, String descricao, double valor){
+    public Mercadoria editar(int id, String nome, String descricao, Categoria categoria,double valor){
 
         Mercadoria mercadoriaEncontrada = mercadoriaPersistencia.buscarPorId(id)
         .orElseThrow(() -> new RuntimeException("Mercadoria não encontrada"));
 
-        mercadoriaEncontrada.atualizar(nome, descricao, valor);
+        mercadoriaEncontrada.atualizar(nome, descricao, categoria, valor);
 
         return mercadoriaEncontrada;
     }

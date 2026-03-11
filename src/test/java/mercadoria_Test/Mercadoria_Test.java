@@ -11,15 +11,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import edu.daisquina.dominio.Categoria;
 import edu.daisquina.dominio.Mercadoria;
+import edu.daisquina.service.CategoriaService;
 import edu.daisquina.service.MercadoriaService;
 
 public class Mercadoria_Test {
 
     private MercadoriaService mercadoriaService;
+    private CategoriaService categoriaService;
 
     @BeforeEach
     public void setup(){
+        categoriaService = new CategoriaService();
         mercadoriaService = new MercadoriaService();
     }
 
@@ -29,7 +33,10 @@ public class Mercadoria_Test {
     @Test
     @DisplayName("Uma nova mercadoria deve ser adicionada ao sistema")
     public void registrarNovaMercadoriaNoSistema(){
-        Mercadoria mercadoria = mercadoriaService.criar(" cadeira ", "Uma cadeira bonita e bem confortável. Seu traseiro irá agradecer", 210.45);
+
+        Categoria categoria = criarCategoria();
+        
+        Mercadoria mercadoria = mercadoriaService.criar(" cadeira ", "Uma cadeira bonita e bem confortável. Seu traseiro irá agradecer", categoria, 210.45);
 
         Optional<Mercadoria> mercadoriaEncontrada = mercadoriaService.buscarPorId(mercadoria.getId());
 
@@ -42,8 +49,10 @@ public class Mercadoria_Test {
     @Test
     @DisplayName("A mercadoria deve ser excluída do sistema")
     public void excluirMercadoriaDoBancoDeDados(){
+
+        Categoria categoria = criarCategoria();
         
-        Mercadoria mercadoria = mercadoriaService.criar("Cadeira", "Uma cadeira bonita e bem confortável. Seu traseiro irá agradecer", 210.45);
+        Mercadoria mercadoria = mercadoriaService.criar("Cadeira", "Uma cadeira bonita e bem confortável. Seu traseiro irá agradecer", categoria,210.45);
 
         mercadoriaService.excluir(mercadoria.getId());
 
@@ -55,11 +64,13 @@ public class Mercadoria_Test {
     @DisplayName("A mercadoria deve ser editada")
     public void editarDadosDeMercadoria(){
 
-        Mercadoria mercadoria = mercadoriaService.criar("Cadira", "Uma cadeira bonita e bem confortável. Seu traseiro irá agradecer", 210.45);
+        Categoria categoria = criarCategoria();
+
+        Mercadoria mercadoria = mercadoriaService.criar("Cadira", "Uma cadeira bonita e bem confortável. Seu traseiro irá agradecer", categoria,210.45);
 
         assertEquals("Cadira", mercadoria.getNome());
 
-        Mercadoria mercadoriaAtualizada = mercadoriaService.editar(mercadoria.getId(), "Cadeira", mercadoria.getDescricao(), mercadoria.getPreco());
+        Mercadoria mercadoriaAtualizada = mercadoriaService.editar(mercadoria.getId(), "Cadeira", mercadoria.getDescricao(), categoria, mercadoria.getPreco());
 
         assertNotEquals("Cadira", mercadoriaAtualizada.getNome());
         
@@ -69,13 +80,22 @@ public class Mercadoria_Test {
     @DisplayName("Mercadoria não pode ser inválida")
     public void mercadoriaNaoPodeSerInvalida(){
         
+        Categoria categoria = criarCategoria();
 
         assertThrows(IllegalArgumentException.class, 
 
         () ->{
-            mercadoriaService.criar("Geladeira", null, 125.50);
+            mercadoriaService.criar("Geladeira", null, categoria,125.50);
         });
 
+    }
+
+    //helper
+    private Categoria criarCategoria(){
+        
+        Categoria categoria = categoriaService.criar("qualquer");
+        
+        return categoria;
     }
 
 }

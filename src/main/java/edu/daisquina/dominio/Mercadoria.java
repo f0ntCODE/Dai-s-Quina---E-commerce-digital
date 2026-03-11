@@ -9,12 +9,13 @@ public class Mercadoria {
 
     private String nome;
     private String descricao;
+    private Categoria categoria;
     
     private Double preco;
 
     
 
-    public Mercadoria(int id, String nome, String descricao, Double preco) {
+    public Mercadoria(int id, String nome, String descricao, Categoria categoria ,Double preco) {
         
         if(nome == null || nome.isBlank()) throw new IllegalArgumentException("Nome inválido");
         if(descricao == null || descricao.isBlank()) throw new IllegalArgumentException("Descrição inválida");
@@ -33,9 +34,10 @@ public class Mercadoria {
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
+        this.categoria = categoria;
     }
 
-    public void atualizar(String novoNome, String novaDescricao, Double novoValor){
+    public void atualizar(String novoNome, String novaDescricao, Categoria novaCategoria,Double novoValor){
         if(novoNome.isBlank() || novoNome == null)throw new IllegalArgumentException("Nome inválido");
 
         if(novaDescricao.isBlank() || novaDescricao == null) throw new IllegalArgumentException("Descrição inválida");
@@ -45,6 +47,7 @@ public class Mercadoria {
         this.nome = novoNome;
         this.descricao = novaDescricao;
         this.preco = novoValor;
+        this.categoria = novaCategoria;
     }
 
     public int getId() {
@@ -61,6 +64,10 @@ public class Mercadoria {
 
     public double getPreco() {
         return preco;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
     }
 
     @Override
