@@ -21,6 +21,14 @@ public class ItemCarrinho {
 
     }
 
+    public void removerQuantidade(int quantidade){
+
+        if(this.quantidade - quantidade < 0) throw new IllegalArgumentException("Quantidade a ser removida resultará em valor negativo");
+
+        this.quantidade -= quantidade;
+    
+    }
+
     public Mercadoria getMercadoria() {
         return mercadoria;
     }

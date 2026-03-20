@@ -36,10 +36,36 @@ public class Carrinho {
             }
     }
 
+    public void removerDoCarrinho(Mercadoria mercadoria, int quantidade){
+
+        ItemCarrinho itemExistente = itensCarrinho.stream()
+        .filter(i -> 
+            i.getMercadoria().equals(mercadoria))
+            .findFirst()
+            .orElseThrow(() ->
+                new IllegalArgumentException("O item a ser removido não existe no carrinho")
+            );
+
+        itemExistente.removerQuantidade(quantidade);
+
+        if(itemExistente.getQuantidade() == 0){
+
+            removerItem(itemExistente);
+
+        }
+
+    }
+
     public Set<ItemCarrinho> listarTodos(){
 
         return Collections.unmodifiableSet(itensCarrinho);
     
+    }
+
+    private void removerItem(ItemCarrinho item){
+
+        itensCarrinho.remove(item);
+
     }
 
 }

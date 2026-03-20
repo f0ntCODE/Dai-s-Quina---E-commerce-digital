@@ -1,5 +1,7 @@
 package edu.daisquina.service;
 
+import java.util.Optional;
+
 import edu.daisquina.banco.CarrinhoPersistencia;
 import edu.daisquina.banco.ClientePersistencia;
 import edu.daisquina.dominio.Carrinho;
@@ -19,21 +21,6 @@ public class CarrinhoService {
 
     }
 
-    public Carrinho resgatarOuCriarCarrinho(Integer clienteId){
-
-        return carrinhoPersistencia.buscarPorCliente(clienteId)
-        .orElseGet(() -> {
-            Cliente cliente = clientePersistencia.buscarPorId(clienteId)
-            .orElseThrow(() -> new RuntimeException("Carrinho não pôde ser encontrado"));
-
-            Carrinho novoCarrinho = new Carrinho(cliente);
-            carrinhoPersistencia.criar(clienteId, cliente);
-
-            return novoCarrinho;
-        });
-
-    }
-
     public Carrinho adicionar(int idCliente, Mercadoria mercadoria, Integer quantidade){
         Carrinho carrinho = carrinhoPersistencia.buscarPorCliente(idCliente)
         .orElseGet(() -> {
@@ -50,6 +37,22 @@ public class CarrinhoService {
         carrinho.adicionarAoCarrinho(mercadoria, quantidade);
 
         return carrinho;
+    }
+
+    public Carrinho remover(int idCliente, Mercadoria mercadoria, Integer quantidade){
+        Carrinho carrinho = carrinhoPersistencia.buscarPorCliente(idCliente)
+        .orElseThrow(() -> new IllegalArgumentException("Carrinho não encontrado"));
+
+        carrinho.removerDoCarrinho(mercadoria, quantidade);
+
+        return carrinho;
+
+    }
+
+    public Optional<Carrinho> buscarPorId(int idCliente){
+
+        return carrinhoPersistencia.buscarPorCliente(idCliente);
+
     }
 
 
