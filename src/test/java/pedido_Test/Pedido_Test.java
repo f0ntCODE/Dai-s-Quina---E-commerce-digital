@@ -65,7 +65,9 @@ public class Pedido_Test {
     public void UmPedidoNaoPodeSerCriadoSemUmProduto(){
 
         assertThrows(IllegalArgumentException.class, () ->{
+
             pedidoService.criar("Afonso", null);
+
         });
 
     }
@@ -79,7 +81,9 @@ public class Pedido_Test {
         mercadorias.add(new Mercadoria(1, "Fogão 4 bocas", "É um fogão", categoria, 124.75));
 
         assertThrows(IllegalArgumentException.class, () ->{
+
             pedidoService.criar(null, mercadorias);
+            
         });
 
     }

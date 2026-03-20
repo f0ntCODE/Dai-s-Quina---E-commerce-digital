@@ -17,6 +17,12 @@ public class ClienteService{
         
     }
 
+    public ClienteService(ClientePersistencia clientePersistencia){
+        this.clientePersistencia = clientePersistencia;
+        this.id = 0;
+
+    }
+
     public Cliente criar(String nome, String email, String senha){
         Cliente clienteCriado = new Cliente(id++, nome, email, senha);
 

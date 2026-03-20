@@ -63,7 +63,7 @@ public class Cliente_Test {
         clienteService.excluir(novoCliente.getId());
 
         assertTrue(clienteService.buscarPorId(novoCliente.getId()).isEmpty());
-
+        
     }
 
     @Test
@@ -79,7 +79,7 @@ public class Cliente_Test {
 
     //helper
     private Cliente criarCliente(){
-        Cliente novoCliente = clienteService.criar("Afonso", "af@gmail.com", "123456a");
+        Cliente novoCliente = clienteService.criar("Afonso", "af@email.com", "123456a");
 
         return novoCliente;
     }

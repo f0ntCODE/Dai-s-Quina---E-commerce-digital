@@ -11,13 +11,13 @@ public class Cliente {
 
     public Cliente(int id, String nome, String email, String senha) {
 
-        Pattern formatoNome = Pattern.compile("(+*@email\\.com$)");
+        Pattern formatoNome = Pattern.compile(".+@email\\.com$");
         Matcher matcher = formatoNome.matcher(email.trim());
 
         if(matcher.find()){
             this.email = email;
         }
-        else{ new IllegalArgumentException("Email inválido. Não segue os padrões");}
+        else{ throw new IllegalArgumentException("Email inválido. Não segue os padrões");}
 
         this.id = id;
         this.nome = nome.trim();
@@ -28,7 +28,7 @@ public class Cliente {
 
         if(novoNome == null || novoNome.isBlank()) throw new IllegalArgumentException("Nome inválido");
         if(novoEmail == null || novoEmail.isBlank()) throw new IllegalArgumentException("Email inválido");
-        if(novaSenha == null || novaSenha.isBlank()) throw new IllegalArgumentException("Senha inválida");
+        if(novaSenha == null || novaSenha.isBlank()) throw new IllegalArgumentException("Senha inválida");  
 
         this.nome  = novoNome;
         this.email = novoEmail;
