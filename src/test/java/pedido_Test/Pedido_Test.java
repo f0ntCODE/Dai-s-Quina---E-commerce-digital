@@ -12,21 +12,35 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import edu.daisquina.banco.CarrinhoPersistencia;
+import edu.daisquina.banco.ClientePersistencia;
+import edu.daisquina.dominio.Carrinho;
 import edu.daisquina.dominio.Categoria;
+import edu.daisquina.dominio.Cliente;
 import edu.daisquina.dominio.Mercadoria;
 import edu.daisquina.dominio.Pedido;
+import edu.daisquina.service.CarrinhoService;
 import edu.daisquina.service.CategoriaService;
+import edu.daisquina.service.ClienteService;
 import edu.daisquina.service.PedidoService;
 
 public class Pedido_Test {
 
     private PedidoService pedidoService;
     private CategoriaService categoriaService;
+    private CarrinhoService carrinhoService;
+    private ClienteService clienteService;
 
     @BeforeEach
     public void setup(){
+
+        ClientePersistencia clientePersistencia = new ClientePersistencia();
+        CarrinhoPersistencia carrinhoPersistencia = new CarrinhoPersistencia();
+
         pedidoService = new PedidoService();
         categoriaService = new CategoriaService();
+        carrinhoService = new CarrinhoService(carrinhoPersistencia, clientePersistencia);
+        clienteService = new ClienteService();
     }
 
     @Test
@@ -35,18 +49,18 @@ public class Pedido_Test {
     @Test
     public void UmPedidoDeveSerCriado(){
 
-        String cliente = "Afonso";
+        Cliente cliente = criarCliente();
+
         Categoria categoria = criarCategoria();
 
         Mercadoria mesa = new Mercadoria(1, "Mesa de madeira", "Mesa de madeira de cedro", categoria, 365.21);
 
         Mercadoria fogao = new Mercadoria(1, "Fogão 4 bocas", "É um fogão", categoria, 124.75);
 
-        Set<Mercadoria> mercadorias = new HashSet<>();
-        mercadorias.add(mesa);
-        mercadorias.add(fogao);
+        Carrinho carrinho = carrinhoService.adicionar(cliente.getId(), fogao, 1);
+        carrinho = carrinhoService.adicionar(cliente.getId(), mesa, 1);
 
-        Pedido pedidoCriado = pedidoService.criar(cliente, mercadorias);
+        Pedido pedidoCriado = pedidoService.criar(cliente, carrinho);
 
         List<String> listaMercadorias = new ArrayList<>();
 
@@ -122,6 +136,12 @@ public class Pedido_Test {
         Categoria categoria = categoriaService.criar("qualquer");
 
         return categoria;
+    }
+
+    private Cliente criarCliente(){
+        Cliente cliente = clienteService.criar("Afonso", "af@gmail.com", "123456a");
+
+        return cliente;
     }
 
 }

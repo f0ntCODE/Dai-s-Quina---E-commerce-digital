@@ -4,6 +4,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import edu.daisquina.banco.PedidoPersistencia;
+import edu.daisquina.dominio.Carrinho;
+import edu.daisquina.dominio.Cliente;
 import edu.daisquina.dominio.Mercadoria;
 import edu.daisquina.dominio.Pedido;
 
@@ -19,9 +21,9 @@ public class PedidoService{
         this.id = 0;
     }
 
-    public Pedido criar(String cliente, Set<Mercadoria> mercadorias){
+    public Pedido criar(Cliente cliente, Carrinho carrinho){
 
-        Pedido pedido = new Pedido(id++, cliente, mercadorias);
+        Pedido pedido = new Pedido(id++, cliente.getId(), carrinho);
 
         pedido = pedidoPersistencia.salvar(pedido);
 
