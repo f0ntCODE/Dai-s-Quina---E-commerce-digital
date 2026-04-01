@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Carrinho {
 
@@ -53,6 +54,15 @@ public class Carrinho {
             removerItem(itemExistente);
 
         }
+
+    }
+
+    public Set<ItemPedido> gerarItensPedido(){
+
+        return  itensCarrinho.stream()
+        .map(ItemPedido::doCarrinho)
+        .collect(Collectors.toSet());
+
 
     }
 

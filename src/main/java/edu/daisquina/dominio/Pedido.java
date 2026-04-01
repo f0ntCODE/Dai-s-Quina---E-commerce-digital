@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 public class Pedido {
 
     private int id;
     
-    private int clienteId;
+    private Cliente cliente;
 
     private LocalDateTime dataPedido;
 
@@ -24,13 +22,13 @@ public class Pedido {
 
     private Set<ItemPedido> mercadorias = new HashSet<>();
 
-    public Pedido(int id, int clienteId, Set<ItemPedido> mercadorias) {
-        if(clienteId == 0) throw new IllegalArgumentException("Cliente não pode ser nulo");
+    public Pedido(int id, Cliente cliente, Set<ItemPedido> mercadorias) {
+        if(cliente == null) throw new IllegalArgumentException("Cliente não pode ser nulo");
 
         if(mercadorias == null || mercadorias.isEmpty()) throw new IllegalArgumentException("Mercadoria não pode ser nula");
 
         this.id = id;
-        this.clienteId = clienteId;
+        this.cliente = cliente;
         this.mercadorias = Set.copyOf(mercadorias);
         this.dataPedido = LocalDateTime.now();
     }
@@ -40,16 +38,38 @@ public class Pedido {
         return mercadorias.size();
     }
 
+    public int getId(){
+        
+        return this.id;
+
+    }
+
     public List<ItemPedido> getMercadorias() {
 
         return new ArrayList<>(mercadorias);
     
     }
 
-    private int calcularTotal(){
-        List<Double> itens =  mercadorias.stream()
-        .map(ItemPedido::getSubTotal)
-        .collect(Collectors.toList());
+    public Double getValorTotal(){
 
+        calcularTotal();
+
+        return this.total;
+
+    }
+
+    public Cliente getCliente(){
+
+        return this.cliente;
+
+    }
+
+    private void calcularTotal(){
+
+        double valorTotal =  mercadorias.stream()
+        .mapToDouble(ItemPedido::getSubTotal)
+        .sum();
+
+        this.total = valorTotal;
     }
 }

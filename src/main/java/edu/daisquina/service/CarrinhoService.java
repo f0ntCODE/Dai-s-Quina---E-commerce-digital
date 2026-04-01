@@ -21,22 +21,25 @@ public class CarrinhoService {
 
     }
 
-    public Carrinho adicionar(int idCliente, Mercadoria mercadoria, Integer quantidade){
-        Carrinho carrinho = carrinhoPersistencia.buscarPorCliente(idCliente)
+    public Carrinho adicionar(Cliente cliente, Mercadoria mercadoria, Integer quantidade){
+
+        if(cliente == null) throw new NullPointerException("Cliente está nulo");
+        
+        Carrinho carrinho = carrinhoPersistencia.buscarPorCliente(cliente.getId())
         .orElseGet(() -> {
 
-            Cliente cliente = clientePersistencia.buscarPorId(idCliente)
+            Cliente clienteEncontrado = clientePersistencia.buscarPorId(cliente.getId())
             .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 
-            Carrinho carrinhoCriado = carrinhoPersistencia.criar(idCliente, cliente);
+            Carrinho carrinhoCriado = carrinhoPersistencia.criar(cliente.getId(), clienteEncontrado);
 
             return carrinhoCriado;
-
+            
         });
-
+        
         carrinho.adicionarAoCarrinho(mercadoria, quantidade);
-
         return carrinho;
+        
     }
 
     public Carrinho remover(int idCliente, Mercadoria mercadoria, Integer quantidade){

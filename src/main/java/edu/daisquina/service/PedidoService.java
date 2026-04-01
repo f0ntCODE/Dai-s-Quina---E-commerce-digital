@@ -1,12 +1,10 @@
 package edu.daisquina.service;
 
 import java.util.Optional;
-import java.util.Set;
 
 import edu.daisquina.banco.PedidoPersistencia;
 import edu.daisquina.dominio.Carrinho;
 import edu.daisquina.dominio.Cliente;
-import edu.daisquina.dominio.Mercadoria;
 import edu.daisquina.dominio.Pedido;
 
 public class PedidoService{
@@ -21,9 +19,9 @@ public class PedidoService{
         this.id = 0;
     }
 
-    public Pedido criar(Cliente cliente, Carrinho carrinho){
+    public Pedido criar(Cliente cliente, Carrinho carrinho) throws NullPointerException{
 
-        Pedido pedido = new Pedido(id++, cliente.getId(), carrinho);
+        Pedido pedido = new Pedido(id++, cliente, carrinho.gerarItensPedido());
 
         pedido = pedidoPersistencia.salvar(pedido);
 
@@ -33,6 +31,14 @@ public class PedidoService{
     public void excluir(int id){
 
         pedidoPersistencia.excluir(id);
+
+    }
+
+    public Cliente buscarPedidoPeloCliente(int id){
+
+        Optional<Pedido> pedido = pedidoPersistencia.buscarPorId(id);
+
+        return pedido.get().getCliente();
 
     }
 

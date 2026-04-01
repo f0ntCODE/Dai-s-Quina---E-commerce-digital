@@ -32,4 +32,10 @@ public class ItemPedido {
 
     }
 
+    public String getNome(){
+
+        return this.nomeProduto;
+    
+    }
+
 }

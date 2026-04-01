@@ -52,7 +52,7 @@ public class Carrinho_Test {
 
         Mercadoria fogao = mercadoriaService.criar("Fogão", "Fogão bom", categoria, 125.0);
 
-        Carrinho carrinho = carrinhoService.adicionar(cliente.getId(), fogao, 1);
+        Carrinho carrinho = carrinhoService.adicionar(cliente, fogao, 1);
 
         // valida criação
         assertNotNull(carrinho);
@@ -61,7 +61,7 @@ public class Carrinho_Test {
         assertEquals(1, carrinho.listarTodos().size());
 
         // adiciona novamente
-        carrinhoService.adicionar(cliente.getId(), fogao, 1);
+        carrinhoService.adicionar(cliente, fogao, 1);
 
         // valida regra de soma de quantidade
         assertEquals(1, carrinho.listarTodos().size());
@@ -78,7 +78,7 @@ public class Carrinho_Test {
 
         Mercadoria fogao = mercadoriaService.criar("Fogão", "Fogão bom", categoria, 125.0);
 
-        Carrinho carrinho = carrinhoService.adicionar(cliente.getId(), fogao, 2);
+        Carrinho carrinho = carrinhoService.adicionar(cliente, fogao, 2);
 
         assertEquals(2, carrinho.listarTodos().iterator().next().getQuantidade());
 
@@ -102,7 +102,7 @@ public class Carrinho_Test {
 
         Mercadoria fogao = mercadoriaService.criar("Fogão", "Fogão bom", categoria, 125.0);
 
-        carrinhoService.adicionar(cliente.getId(), fogao, 2);
+        carrinhoService.adicionar(cliente, fogao, 2);
 
         assertThrows(IllegalArgumentException.class, () ->
         

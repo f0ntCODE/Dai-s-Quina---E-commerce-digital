@@ -4,10 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,8 +35,8 @@ public class Pedido_Test {
 
         pedidoService = new PedidoService();
         categoriaService = new CategoriaService();
-        carrinhoService = new CarrinhoService(carrinhoPersistencia, clientePersistencia);
-        clienteService = new ClienteService();
+        this.carrinhoService = new CarrinhoService(carrinhoPersistencia, clientePersistencia);
+        this.clienteService = new ClienteService(clientePersistencia);
     }
 
     @Test
@@ -57,47 +53,25 @@ public class Pedido_Test {
 
         Mercadoria fogao = new Mercadoria(1, "Fogão 4 bocas", "É um fogão", categoria, 124.75);
 
-        Carrinho carrinho = carrinhoService.adicionar(cliente.getId(), fogao, 1);
-        carrinho = carrinhoService.adicionar(cliente.getId(), mesa, 1);
+        Carrinho carrinho = carrinhoService.adicionar(cliente, fogao, 1);
+        carrinho = carrinhoService.adicionar(cliente, mesa, 1);
 
         Pedido pedidoCriado = pedidoService.criar(cliente, carrinho);
 
-        List<String> listaMercadorias = new ArrayList<>();
-
-        listaMercadorias = pedidoCriado.getMercadorias()
-        .stream()
-        .map(Mercadoria :: getNome)
-        .toList();
-
-        assertEquals(cliente, pedidoCriado.getCliente());
+        assertEquals(cliente.getNome(), pedidoCriado.getCliente().getNome());
         assertEquals(2, pedidoCriado.getTamanhoListaMercadorias()); 
-        assertTrue(this.encontrarStringNaLista(mesa.getNome(), listaMercadorias));
 
     }
 
     @Test
     public void UmPedidoNaoPodeSerCriadoSemUmProduto(){
 
-        assertThrows(IllegalArgumentException.class, () ->{
+        Cliente cliente = criarCliente();
 
-            pedidoService.criar("Afonso", null);
+        assertThrows(NullPointerException.class, () ->{
 
-        });
+            pedidoService.criar(cliente, null);
 
-    }
-
-    @Test
-    public void UmPedidoNaoPodeSerCriadoSemUmCliente(){
-        Categoria categoria = criarCategoria();
-
-        Set<Mercadoria> mercadorias = new HashSet<>();
-
-        mercadorias.add(new Mercadoria(1, "Fogão 4 bocas", "É um fogão", categoria, 124.75));
-
-        assertThrows(IllegalArgumentException.class, () ->{
-
-            pedidoService.criar(null, mercadorias);
-            
         });
 
     }
@@ -106,13 +80,13 @@ public class Pedido_Test {
     public void UmPedidoDeveSerExcluido(){
 
         Categoria categoria = criarCategoria();
-        Set<Mercadoria> mercadorias = new HashSet<>();
+        Cliente cliente = criarCliente();
 
-        mercadorias.add(new Mercadoria(1, "Cadeira", "Para sentar", categoria, 89.80));
+        Mercadoria mercadoria = new Mercadoria(1, "Cadeira", "Para sentar", categoria, 89.80);
 
-        String cliente = "Odair";
+        Carrinho carrinho = carrinhoService.adicionar(cliente, mercadoria, 1);
 
-        Pedido novoPedido = pedidoService.criar(cliente, mercadorias);
+        Pedido novoPedido = pedidoService.criar(cliente, carrinho);
         pedidoService.excluir(novoPedido.getId());
 
         assertTrue(pedidoService.buscarPorId(novoPedido.getId()).isEmpty());
@@ -120,16 +94,6 @@ public class Pedido_Test {
     }
 
     //helper
-    private boolean encontrarStringNaLista(String nomeASerEncontrado, List<String> lista){
-
-        for(String nome : lista){
-                if(nome == nomeASerEncontrado){
-                    return true;
-                }
-            }
-
-            return false;
-    }
 
     private Categoria criarCategoria(){
         
@@ -139,7 +103,7 @@ public class Pedido_Test {
     }
 
     private Cliente criarCliente(){
-        Cliente cliente = clienteService.criar("Afonso", "af@gmail.com", "123456a");
+        Cliente cliente = clienteService.criar("Afonso", "af@email.com", "123456a");
 
         return cliente;
     }
