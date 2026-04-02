@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +16,7 @@ import edu.daisquina.banco.ClientePersistencia;
 import edu.daisquina.dominio.Carrinho;
 import edu.daisquina.dominio.Categoria;
 import edu.daisquina.dominio.Cliente;
+import edu.daisquina.dominio.ItemPedido;
 import edu.daisquina.dominio.Mercadoria;
 import edu.daisquina.dominio.Pedido;
 import edu.daisquina.service.CarrinhoService;
@@ -58,8 +62,15 @@ public class Pedido_Test {
 
         Pedido pedidoCriado = pedidoService.criar(cliente, carrinho);
 
+        List<ItemPedido> itensPedido = new ArrayList<>();
+
+        itensPedido = pedidoCriado.getMercadorias();
+
         assertEquals(cliente.getNome(), pedidoCriado.getCliente().getNome());
-        assertEquals(2, pedidoCriado.getTamanhoListaMercadorias()); 
+        assertEquals(2, pedidoCriado.getTamanhoListaMercadorias());
+        assertTrue(verificarSeMercadoriaExiste("Mesa de madeira", itensPedido));
+        assertEquals(489.96, pedidoCriado.getValorTotal());
+        assertEquals(LocalDate.now(), pedidoCriado.getData());
 
     }
 
@@ -106,6 +117,14 @@ public class Pedido_Test {
         Cliente cliente = clienteService.criar("Afonso", "af@email.com", "123456a");
 
         return cliente;
+    }
+
+    private boolean verificarSeMercadoriaExiste(String nomeMercadoria, List<ItemPedido> listaItens){
+
+        return listaItens.stream()
+        .anyMatch(i -> 
+            i.getNome().equals(nomeMercadoria));
+
     }
 
 }

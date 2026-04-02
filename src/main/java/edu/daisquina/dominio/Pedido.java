@@ -1,10 +1,12 @@
 package edu.daisquina.dominio;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import edu.daisquina.enumeradores.StatusPagamento;
 
 public class Pedido {
 
@@ -12,13 +14,15 @@ public class Pedido {
     
     private Cliente cliente;
 
-    private LocalDateTime dataPedido;
+    private LocalDate dataPedido;
 
     private double subTotal;
 
     private double frete;
 
     private double total;
+
+    private StatusPagamento statusPagamento;
 
     private Set<ItemPedido> mercadorias = new HashSet<>();
 
@@ -30,7 +34,8 @@ public class Pedido {
         this.id = id;
         this.cliente = cliente;
         this.mercadorias = Set.copyOf(mercadorias);
-        this.dataPedido = LocalDateTime.now();
+        this.dataPedido = LocalDate.now();
+        this.statusPagamento = StatusPagamento.PENDENTE;
     }
 
     public int getTamanhoListaMercadorias(){
@@ -50,6 +55,12 @@ public class Pedido {
     
     }
 
+    public LocalDate getData(){
+
+        return this.dataPedido;
+    
+    }
+
     public Double getValorTotal(){
 
         calcularTotal();
@@ -61,6 +72,12 @@ public class Pedido {
     public Cliente getCliente(){
 
         return this.cliente;
+
+    }
+
+    public String getStatusPagamento(){
+
+        return this.statusPagamento.getDescricao();
 
     }
 
