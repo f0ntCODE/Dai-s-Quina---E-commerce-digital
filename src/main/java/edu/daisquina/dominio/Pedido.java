@@ -16,10 +16,6 @@ public class Pedido {
 
     private LocalDate dataPedido;
 
-    private double subTotal;
-
-    private double frete;
-
     private double total;
 
     private StatusPagamento statusPagamento;
@@ -80,6 +76,12 @@ public class Pedido {
         return this.statusPagamento.getDescricao();
 
     }
+
+    public void setStatusPagamento(StatusPagamento status){
+        this.statusPagamento = status;
+    }
+
+    //****************** PRIVADOS */
 
     private void calcularTotal(){
 
