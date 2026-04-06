@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: carrinho_Test.Carrinho_Test
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s -- in carrinho_Test.Carrinho_Test
