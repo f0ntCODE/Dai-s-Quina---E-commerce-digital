@@ -1,6 +1,7 @@
 package mercadoria_Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -63,6 +64,23 @@ public class Categoria_Test {
         categoriaService.excluir(categoria.getId());
 
         assertTrue(categoriaService.buscarPorId(categoria.getId()).isEmpty());
+    }
+
+    @Test
+    @DisplayName("Categoria não pode ser removida duas vezes")
+    public void categoriaNaoPodeSerRemovidaDuasVezes(){
+        Categoria categoria = categoriaService.criar("qualquer");
+
+        categoriaService.excluir(categoria.getId());
+
+        assertTrue(categoriaService.buscarPorId(categoria.getId()).isEmpty());
+
+        assertThrows(RuntimeException.class, () ->{
+
+            categoriaService.excluir(categoria.getId());
+
+        });
+        
     }
 
 }

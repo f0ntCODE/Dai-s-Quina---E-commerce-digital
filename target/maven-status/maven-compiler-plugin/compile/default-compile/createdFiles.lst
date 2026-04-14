@@ -18,7 +18,6 @@ edu/daisquina/service/PagamentoService.class
 edu/daisquina/banco/PedidoPersistencia.class
 edu/daisquina/service/MercadoriaService.class
 edu/daisquina/banco/CarrinhoPersistencia.class
-edu/daisquina/controllers/TestController.class
 edu/daisquina/repository/MercadoriaRepository.class
 edu/daisquina/enumeradores/StatusPagamento.class
 edu/daisquina/Main.class

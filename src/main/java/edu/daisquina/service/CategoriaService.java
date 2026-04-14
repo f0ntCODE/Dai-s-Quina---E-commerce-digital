@@ -2,9 +2,12 @@ package edu.daisquina.service;
 
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import edu.daisquina.banco.CategoriaPersistencia;
 import edu.daisquina.dominio.Categoria;
 
+@Service
 public class CategoriaService {
 
     private final CategoriaPersistencia categoriaPersistencia;
@@ -40,11 +43,13 @@ public class CategoriaService {
     }
 
     public void excluir(int id){
-    categoriaPersistencia.excluir(id);
+        if(buscarPorId(id).isEmpty()){throw new RuntimeException("Categoria não encontrada");}
+
+        categoriaPersistencia.excluir(id);
 
     }
 
-    public Optional<Categoria> buscarPorId(int id){
+    public Optional<Categoria> buscarPorId(int id) throws RuntimeException{
 
         return categoriaPersistencia.buscarPorId(id);
 

@@ -2,12 +2,15 @@ package edu.daisquina.service;
 
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import edu.daisquina.banco.CarrinhoPersistencia;
 import edu.daisquina.banco.ClientePersistencia;
 import edu.daisquina.dominio.Carrinho;
 import edu.daisquina.dominio.Cliente;
 import edu.daisquina.dominio.Mercadoria;
 
+@Service
 public class CarrinhoService {
 
     private final CarrinhoPersistencia carrinhoPersistencia;

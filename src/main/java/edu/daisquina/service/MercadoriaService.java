@@ -2,10 +2,13 @@ package edu.daisquina.service;
 
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import edu.daisquina.banco.MercadoriaPersistencia;
 import edu.daisquina.dominio.Categoria;
 import edu.daisquina.dominio.Mercadoria;
 
+@Service
 public class MercadoriaService {
 
     private int id;
