@@ -5,6 +5,7 @@
 /home/font/Projetos/Dai's Quina/Dai-s-Quina---E-commerce-digital/src/main/java/edu/daisquina/banco/MercadoriaPersistencia.java
 /home/font/Projetos/Dai's Quina/Dai-s-Quina---E-commerce-digital/src/main/java/edu/daisquina/banco/PedidoPersistencia.java
 /home/font/Projetos/Dai's Quina/Dai-s-Quina---E-commerce-digital/src/main/java/edu/daisquina/controllers/CategoriaController.java
+/home/font/Projetos/Dai's Quina/Dai-s-Quina---E-commerce-digital/src/main/java/edu/daisquina/controllers/MercadoriaController.java
 /home/font/Projetos/Dai's Quina/Dai-s-Quina---E-commerce-digital/src/main/java/edu/daisquina/dominio/Carrinho.java
 /home/font/Projetos/Dai's Quina/Dai-s-Quina---E-commerce-digital/src/main/java/edu/daisquina/dominio/Categoria.java
 /home/font/Projetos/Dai's Quina/Dai-s-Quina---E-commerce-digital/src/main/java/edu/daisquina/dominio/Cliente.java

@@ -26,6 +26,7 @@ public class CategoriaService {
         Categoria novaCategoria = new Categoria(id++, nome);
 
         categoriaPersistencia.salvar(novaCategoria);
+        System.out.println("Categoria criada: " + novaCategoria.toString());
 
         return novaCategoria;
 

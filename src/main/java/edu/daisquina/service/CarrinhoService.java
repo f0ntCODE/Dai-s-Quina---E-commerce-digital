@@ -10,7 +10,6 @@ import edu.daisquina.dominio.Carrinho;
 import edu.daisquina.dominio.Cliente;
 import edu.daisquina.dominio.Mercadoria;
 
-@Service
 public class CarrinhoService {
 
     private final CarrinhoPersistencia carrinhoPersistencia;

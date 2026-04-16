@@ -16,6 +16,7 @@ public class Mercadoria {
     
 
     public Mercadoria(int id, String nome, String descricao, Categoria categoria ,Double preco) {
+        System.out.println("Entrou no construtor");
         
         if(nome == null || nome.isBlank()) throw new IllegalArgumentException("Nome inválido");
         if(descricao == null || descricao.isBlank()) throw new IllegalArgumentException("Descrição inválida");
@@ -107,6 +108,12 @@ public class Mercadoria {
         if (Double.doubleToLongBits(preco) != Double.doubleToLongBits(other.preco))
             return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Mercadoria [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", categoria=" + categoria.getNome()
+                + ", preco=" + preco + "]";
     }
 
     
