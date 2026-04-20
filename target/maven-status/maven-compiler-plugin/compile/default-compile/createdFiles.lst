@@ -9,12 +9,14 @@ edu/daisquina/factories/metodosPagamento/CartaoPagamento.class
 edu/daisquina/dominio/Carrinho.class
 edu/daisquina/service/PedidoService.class
 edu/daisquina/service/CarrinhoService.class
+edu/daisquina/controllers/MercadoriaController.class
 edu/daisquina/repository/ClienteRepository.class
 edu/daisquina/dominio/Pedido.class
 edu/daisquina/dominio/Cliente.class
 edu/daisquina/dominio/ItemCarrinho.class
 edu/daisquina/dominio/Categoria.class
 edu/daisquina/service/PagamentoService.class
+edu/daisquina/controllers/CategoriaController.class
 edu/daisquina/banco/PedidoPersistencia.class
 edu/daisquina/service/MercadoriaService.class
 edu/daisquina/banco/CarrinhoPersistencia.class

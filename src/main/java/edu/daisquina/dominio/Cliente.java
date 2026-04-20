@@ -51,6 +51,11 @@ public class Cliente {
     public String getSenha() {
         return senha;
     }
+
+    @Override
+    public String toString() {
+        return "Cliente [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + "]";
+    }
     
     
 
