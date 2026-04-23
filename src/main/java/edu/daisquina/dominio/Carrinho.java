@@ -78,4 +78,11 @@ public class Carrinho {
 
     }
 
+    @Override
+    public String toString() {
+        return "Carrinho [cliente=" + cliente + ", itensCarrinho=" + itensCarrinho + "]";
+    }
+
+    
+
 }

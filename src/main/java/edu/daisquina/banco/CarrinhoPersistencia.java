@@ -4,10 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.stereotype.Component;
+
 import edu.daisquina.dominio.Carrinho;
 import edu.daisquina.dominio.Cliente;
 import edu.daisquina.repository.CarrinhoInterface;
 
+@Component
 public class CarrinhoPersistencia implements CarrinhoInterface{
 
     private Map<Integer, Carrinho> bancoCarrinho = new HashMap<>();

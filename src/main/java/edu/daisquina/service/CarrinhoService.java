@@ -10,10 +10,11 @@ import edu.daisquina.dominio.Carrinho;
 import edu.daisquina.dominio.Cliente;
 import edu.daisquina.dominio.Mercadoria;
 
+@Service
 public class CarrinhoService {
 
-    private final CarrinhoPersistencia carrinhoPersistencia;
-    private final ClientePersistencia clientePersistencia;
+    private CarrinhoPersistencia carrinhoPersistencia;
+    private ClientePersistencia clientePersistencia;
 
     public CarrinhoService(CarrinhoPersistencia carrinhoPersistencia, 
         ClientePersistencia clientePersistencia){
@@ -23,17 +24,17 @@ public class CarrinhoService {
 
     }
 
-    public Carrinho adicionar(Cliente cliente, Mercadoria mercadoria, Integer quantidade){
+    public Carrinho adicionar(int idCliente, Mercadoria mercadoria, Integer quantidade){
 
-        if(cliente == null) throw new NullPointerException("Cliente está nulo");
+        if(idCliente < 0) throw new IllegalArgumentException("Id inválido");
         
-        Carrinho carrinho = carrinhoPersistencia.buscarPorCliente(cliente.getId())
+        Carrinho carrinho = carrinhoPersistencia.buscarPorCliente(idCliente)
         .orElseGet(() -> {
 
-            Cliente clienteEncontrado = clientePersistencia.buscarPorId(cliente.getId())
+            Cliente clienteEncontrado = clientePersistencia.buscarPorId(idCliente)
             .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 
-            Carrinho carrinhoCriado = carrinhoPersistencia.criar(cliente.getId(), clienteEncontrado);
+            Carrinho carrinhoCriado = carrinhoPersistencia.criar(idCliente, clienteEncontrado);
 
             return carrinhoCriado;
             

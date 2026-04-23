@@ -84,7 +84,7 @@ public class PagamentoTest {
         
         Mercadoria mercadoria = mercadoriaService.criar("Mesa", "Mesa de madeira", moveis, 100.0);
 
-        Carrinho carrinho = carrinhoService.adicionar(cliente, mercadoria, 1);
+        Carrinho carrinho = carrinhoService.adicionar(cliente.getId(), mercadoria, 1);
 
         Pedido pedido = pedidoService.criar(cliente, carrinho);
 

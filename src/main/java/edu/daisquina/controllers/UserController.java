@@ -7,13 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.daisquina.dominio.Cliente;
 import edu.daisquina.service.ClienteService;
 
-import java.lang.foreign.Linker.Option;
-import java.util.Optional;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @RestController
@@ -39,6 +37,11 @@ public class UserController {
         return ResponseEntity.ok(cliente.toString());
     }
 
-    
-
+    @PostMapping("/excluir/{idCliente}")
+    public ResponseEntity<?> excluirUsuario(@PathVariable int idCliente
+    ) {
+        clienteService.excluir(idCliente);
+        
+        return ResponseEntity.ok("Excluído");
+    } 
 }

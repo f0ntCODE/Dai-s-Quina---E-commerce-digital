@@ -57,8 +57,8 @@ public class Pedido_Test {
 
         Mercadoria fogao = new Mercadoria(1, "Fogão 4 bocas", "É um fogão", categoria, 124.75);
 
-        Carrinho carrinho = carrinhoService.adicionar(cliente, fogao, 1);
-        carrinho = carrinhoService.adicionar(cliente, mesa, 1);
+        Carrinho carrinho = carrinhoService.adicionar(cliente.getId(), fogao, 1);
+        carrinho = carrinhoService.adicionar(cliente.getId(), mesa, 1);
 
         Pedido pedidoCriado = pedidoService.criar(cliente, carrinho);
 
@@ -95,7 +95,7 @@ public class Pedido_Test {
 
         Mercadoria mercadoria = new Mercadoria(1, "Cadeira", "Para sentar", categoria, 89.80);
 
-        Carrinho carrinho = carrinhoService.adicionar(cliente, mercadoria, 1);
+        Carrinho carrinho = carrinhoService.adicionar(cliente.getId(), mercadoria, 1);
 
         Pedido novoPedido = pedidoService.criar(cliente, carrinho);
         pedidoService.excluir(novoPedido.getId());
