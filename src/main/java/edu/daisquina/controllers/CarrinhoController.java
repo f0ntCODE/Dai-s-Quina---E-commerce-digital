@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.daisquina.dominio.Carrinho;
-import edu.daisquina.dominio.Cliente;
 import edu.daisquina.dominio.Mercadoria;
 import edu.daisquina.service.CarrinhoService;
 import edu.daisquina.service.ClienteService;

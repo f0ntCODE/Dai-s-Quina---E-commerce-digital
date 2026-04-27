@@ -9,19 +9,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.daisquina.dominio.Cliente;
 import edu.daisquina.service.ClienteService;
 
 public class Cliente_Test {
 
+    @Autowired
     private ClienteService clienteService;
-
-    @BeforeEach
-    void setup(){
-        this.clienteService = new ClienteService();
-
-    }
 
     @Test
     void test(){}

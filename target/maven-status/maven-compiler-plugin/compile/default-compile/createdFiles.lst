@@ -2,6 +2,7 @@ edu/daisquina/repository/CarrinhoInterface.class
 edu/daisquina/service/ClienteService.class
 edu/daisquina/repository/PedidoRepository.class
 edu/daisquina/factories/PagamentoFactory.class
+edu/daisquina/controllers/CarrinhoController.class
 edu/daisquina/service/CategoriaService.class
 edu/daisquina/repository/CategoriaInterface.class
 edu/daisquina/factories/pagamento/PagamentoInterface.class
@@ -10,6 +11,7 @@ edu/daisquina/dominio/Carrinho.class
 edu/daisquina/service/PedidoService.class
 edu/daisquina/service/CarrinhoService.class
 edu/daisquina/controllers/MercadoriaController.class
+edu/daisquina/controllers/UserController.class
 edu/daisquina/repository/ClienteRepository.class
 edu/daisquina/dominio/Pedido.class
 edu/daisquina/dominio/Cliente.class
@@ -24,8 +26,10 @@ edu/daisquina/repository/MercadoriaRepository.class
 edu/daisquina/enumeradores/StatusPagamento.class
 edu/daisquina/Main.class
 edu/daisquina/banco/CategoriaPersistencia.class
+edu/daisquina/controllers/LoginController.class
 edu/daisquina/factories/metodosPagamento/PixPagamento.class
 edu/daisquina/banco/MercadoriaPersistencia.class
+edu/daisquina/entity/Cliente.class
 edu/daisquina/dominio/ItemPedido.class
 edu/daisquina/banco/ClientePersistencia.class
 edu/daisquina/dominio/Mercadoria.class

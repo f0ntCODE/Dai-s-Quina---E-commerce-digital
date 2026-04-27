@@ -4,12 +4,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Cliente {
-    private int id;
+    private Long id;
     private String nome;
     private String email;
     private String senha;
 
-    public Cliente(int id, String nome, String email, String senha) {
+    public Cliente(String nome, String email, String senha) {
 
         Pattern formatoNome = Pattern.compile(".+@email\\.com$");
         Matcher matcher = formatoNome.matcher(email.trim());
@@ -19,7 +19,6 @@ public class Cliente {
         }
         else{ throw new IllegalArgumentException("Email inválido. Não segue os padrões");}
 
-        this.id = id;
         this.nome = nome.trim();
         this.senha = senha;
     }
@@ -36,7 +35,7 @@ public class Cliente {
 
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
