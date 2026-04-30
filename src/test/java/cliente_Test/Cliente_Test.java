@@ -5,19 +5,24 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import edu.daisquina.dominio.Cliente;
+import edu.daisquina.dtos.RequestClienteDTO;
+import edu.daisquina.dtos.ResponseClienteDTO;
 import edu.daisquina.service.ClienteService;
 
+@SpringBootTest(classes = edu.daisquina.Main.class)
 public class Cliente_Test {
 
-    @Autowired
     private ClienteService clienteService;
+
+    @AfterAll
+    void setup(){
+        this.clienteService = new ClienteService(null, null, null);
+    }
 
     @Test
     void test(){}
@@ -27,10 +32,10 @@ public class Cliente_Test {
     @Test
     @DisplayName("Cliente deve ser criado")
     public void clienteDeveSerCriadoNoSistema(){
-        Cliente novoCliente = criarCliente();
+        ResponseClienteDTO novoCliente = criarCliente();
 
-        assertNotNull(clienteService.buscarPorId(novoCliente.getId()));
-        assertEquals("Afonso", novoCliente.getNome());
+        assertNotNull(clienteService.buscarPorId(novoCliente.id()));
+        assertEquals("Afonso", novoCliente.nome());
 
     }
 
@@ -42,7 +47,9 @@ public class Cliente_Test {
         assertThrows(IllegalArgumentException.class, 
             () -> {
                
-                clienteService.criar("Afonso", "afemail.com", "123456a");
+                RequestClienteDTO request = new RequestClienteDTO("Afonso", "af@email.com", "123456a");
+
+                clienteService.criar(request);
             
             });
 
@@ -54,28 +61,31 @@ public class Cliente_Test {
     @DisplayName("Cliente não pode mais existir mais no banco de dados")
     public void clienteDeveSerRemovidoBanco(){
 
-        Cliente novoCliente = criarCliente();
+        ResponseClienteDTO novoCliente = criarCliente();
 
-        clienteService.excluir(novoCliente.getId());
+        clienteService.excluir(novoCliente.id());
 
-        assertTrue(clienteService.buscarPorId(novoCliente.getId()).isEmpty());
+        assertTrue(clienteService.buscarPorId(novoCliente.id()).isEmpty());
         
     }
 
     @Test
     @DisplayName("Dados do cliente devem ser modificados")
     public void dadosDoClienteDevemSerModificados(){
-        Cliente novoCliente = criarCliente();
+        ResponseClienteDTO novoCliente = criarCliente();
+        RequestClienteDTO novosDados = new RequestClienteDTO("Odair", "od@email.com", "123456a");
 
-        Cliente clienteEditado = clienteService.editar(novoCliente.getId(), "Odair", novoCliente.getEmail(), novoCliente.getSenha());
+        ResponseClienteDTO clienteEditado = clienteService.editar(novoCliente.id(), novosDados);
 
-        assertEquals("Odair", clienteEditado.getNome());
+        assertEquals("Odair", clienteEditado.nome());
 
     }
 
     //helper
-    private Cliente criarCliente(){
-        Cliente novoCliente = clienteService.criar("Afonso", "af@email.com", "123456a");
+    private ResponseClienteDTO criarCliente(){
+        RequestClienteDTO request = new RequestClienteDTO("Afonso", "af@email.com", "123456a");
+
+        ResponseClienteDTO novoCliente = clienteService.criar(request);
 
         return novoCliente;
     }

@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import edu.daisquina.banco.ClientePersistencia;
 import edu.daisquina.dominio.Cliente;
 import edu.daisquina.dtos.RequestClienteDTO;
 import edu.daisquina.dtos.ResponseClienteDTO;
@@ -12,29 +11,27 @@ import edu.daisquina.mappers.ClienteMappers.ClienteEntityMapper;
 import edu.daisquina.mappers.ClienteMappers.ClienteMapper;
 import edu.daisquina.persistencia.entity.ClienteEntity;
 import edu.daisquina.persistencia.repositories.ClienteRepo;
+import jakarta.transaction.Transactional;
 
-@Service
-public class ClienteService{
+    @Service
+    public class ClienteService{
 
-    private final ClientePersistencia clientePersistencia;
-    private final ClienteRepo clienteRepo;
-    private final ClienteMapper clienteMapper;
-    private final ClienteEntityMapper entityMapper;
-    
-    private int id;
-
-    public ClienteService(ClienteMapper clienteMapper,
-        ClienteRepo clienteRepo,
-        ClienteEntityMapper entityMapper
-    ){
-        this.id = 0;
-        this.clientePersistencia = new ClientePersistencia();
-        this.clienteMapper = clienteMapper;
-        this.clienteRepo = clienteRepo;
-        this.entityMapper = entityMapper;
+        private final ClienteRepo clienteRepo;
+        private final ClienteMapper clienteMapper;
+        private final ClienteEntityMapper entityMapper;
         
-    }
 
+        public ClienteService(ClienteMapper clienteMapper,
+            ClienteRepo clienteRepo,
+            ClienteEntityMapper entityMapper
+        ){
+            this.clienteMapper = clienteMapper;
+            this.clienteRepo = clienteRepo;
+            this.entityMapper = entityMapper;
+            
+        }
+
+    @Transactional
     public ResponseClienteDTO criar(RequestClienteDTO request){
         Cliente cliente = new Cliente( 
             request.nome(), 
@@ -51,28 +48,45 @@ public class ClienteService{
         return clienteMapper.toResponse(clienteSalvo);
     }
 
-    public Optional<Cliente> buscarPorId(Long id){
+    @Transactional
+    public Optional<ResponseClienteDTO> buscarPorId(Long id){
 
-        return clienteRepo.findById(id);
-    }
-
-    public void excluir(int id){
-
-        clientePersistencia.excluir(id);
+        return clienteRepo.findById(id)
+        .map(entityMapper::toDomain)
+        .map(clienteMapper::toResponse);
 
     }
 
-    public Cliente editar(int id, String nome, String email, String senha){
+    @Transactional
+    public void excluir(Long id){
 
-        Cliente clienteEncontrado = buscarPorId(id)
+        clienteRepo.deleteById(id);
+
+    }
+
+    @Transactional
+    public ResponseClienteDTO editar(Long id, RequestClienteDTO request){
+
+        ClienteEntity entidade = clienteRepo.findById(id)
         .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 
-        clienteEncontrado.atualizar(nome, email, senha);
+        Cliente cliente = entityMapper.toDomain(entidade);
+        
+        cliente.atualizar(
+        request.nome(), 
+        request.email(), 
+        request.senha()
+        );
 
-        return clienteEncontrado;
+        ClienteEntity atualizado = entityMapper.toEntity(cliente);
+
+        atualizado.setId(entidade.getId());
+
+        ClienteEntity salvo = clienteRepo.save(atualizado);
+
+        Cliente clienteFinal = entityMapper.toDomain(salvo);
+
+        return clienteMapper.toResponse(clienteFinal);
 
     }
-
-
-
 }

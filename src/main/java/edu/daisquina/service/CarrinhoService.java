@@ -24,9 +24,9 @@ public class CarrinhoService {
 
     }
 
-    public Carrinho adicionar(int idCliente, Mercadoria mercadoria, Integer quantidade){
+    public Carrinho adicionar(Long idCliente, Mercadoria mercadoria, Integer quantidade){
 
-        if(idCliente < 0) throw new IllegalArgumentException("Id inválido");
+        if(idCliente < 0L) throw new IllegalArgumentException("Id inválido");
         
         Carrinho carrinho = carrinhoPersistencia.buscarPorCliente(idCliente)
         .orElseGet(() -> {
@@ -45,7 +45,7 @@ public class CarrinhoService {
         
     }
 
-    public Carrinho remover(int idCliente, Mercadoria mercadoria, Integer quantidade){
+    public Carrinho remover(Long idCliente, Mercadoria mercadoria, Integer quantidade){
         Carrinho carrinho = carrinhoPersistencia.buscarPorCliente(idCliente)
         .orElseThrow(() -> new IllegalArgumentException("Carrinho não encontrado"));
 
@@ -55,7 +55,7 @@ public class CarrinhoService {
 
     }
 
-    public Optional<Carrinho> buscarPorId(int idCliente){
+    public Optional<Carrinho> buscarPorId(Long idCliente){
 
         return carrinhoPersistencia.buscarPorCliente(idCliente);
 

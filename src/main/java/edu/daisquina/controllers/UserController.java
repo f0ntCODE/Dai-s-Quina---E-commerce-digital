@@ -4,7 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.daisquina.dominio.Cliente;
+import edu.daisquina.dtos.RequestClienteDTO;
+import edu.daisquina.dtos.ResponseClienteDTO;
 import edu.daisquina.service.ClienteService;
 
 import org.springframework.http.ResponseEntity;
@@ -24,19 +25,21 @@ public class UserController {
     }
 
     @PostMapping("/editar/{idCliente}")
-    public ResponseEntity<String> editarDados(@PathVariable int idCliente,
+    public ResponseEntity<String> editarDados(@PathVariable Long idCliente,
         @RequestParam String novoNome,
         @RequestParam String novoEmail,
         @RequestParam String novaSenha
     ) {
+
+        RequestClienteDTO request = new RequestClienteDTO(novoNome, novoEmail, novaSenha);
         
-        Cliente cliente = clienteService.editar(idCliente, novoNome, novoEmail, novaSenha);
+        ResponseClienteDTO cliente = clienteService.editar(idCliente, request);
 
         return ResponseEntity.ok(cliente.toString());
     }
 
     @PostMapping("/excluir/{idCliente}")
-    public ResponseEntity<?> excluirUsuario(@PathVariable int idCliente
+    public ResponseEntity<?> excluirUsuario(@PathVariable Long idCliente
     ) {
         clienteService.excluir(idCliente);
         

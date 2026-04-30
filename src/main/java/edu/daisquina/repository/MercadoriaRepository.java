@@ -9,9 +9,9 @@ public interface MercadoriaRepository {
 
     Mercadoria salvar(Mercadoria mercadoria);
 
-    Optional<Mercadoria> buscarPorId(Integer id);
+    Optional<Mercadoria> buscarPorId(Long id);
 
-    void excluir(Integer id);
+    void excluir(Long id);
 
     List<Mercadoria> listarTudo();
 

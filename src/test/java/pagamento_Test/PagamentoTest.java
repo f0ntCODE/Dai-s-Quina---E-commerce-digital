@@ -14,6 +14,8 @@ import edu.daisquina.dominio.Categoria;
 import edu.daisquina.dominio.Cliente;
 import edu.daisquina.dominio.Mercadoria;
 import edu.daisquina.dominio.Pedido;
+import edu.daisquina.dtos.RequestClienteDTO;
+import edu.daisquina.dtos.ResponseClienteDTO;
 import edu.daisquina.service.CarrinhoService;
 import edu.daisquina.service.CategoriaService;
 import edu.daisquina.service.ClienteService;
@@ -40,7 +42,6 @@ public class PagamentoTest {
 
         this.carrinhoService = new CarrinhoService(carrinhoPersistencia, clientePersistencia);
 
-        this.clienteService = new ClienteService(clientePersistencia);
         this.pedidoService = new PedidoService();
         this.pagamentoService = new PagamentoService();
 
@@ -78,20 +79,20 @@ public class PagamentoTest {
 
     //helper
     private Pedido criarPedido(){
-        Cliente cliente = clienteService.criar("Afonso", "af@email.com", "123456a");
+
+        RequestClienteDTO request = new RequestClienteDTO("Afonso", "af@email.com", "123456a");
+
+        ResponseClienteDTO cliente = clienteService.criar(request);
         
         Categoria moveis = categoriaService.criar("Móveis");
         
         Mercadoria mercadoria = mercadoriaService.criar("Mesa", "Mesa de madeira", moveis, 100.0);
 
-        Carrinho carrinho = carrinhoService.adicionar(cliente.getId(), mercadoria, 1);
+        Carrinho carrinho = carrinhoService.adicionar(cliente.id(), mercadoria, 1);
 
-        Pedido pedido = pedidoService.criar(cliente, carrinho);
+        Pedido pedido = pedidoService.criar(request, carrinho);
 
         return pedido;
 
     }
-
-
-
 }

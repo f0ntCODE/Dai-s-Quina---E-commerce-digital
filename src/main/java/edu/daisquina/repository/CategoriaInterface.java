@@ -9,9 +9,9 @@ public interface CategoriaInterface {
 
     Categoria salvar(Categoria categoria);
 
-    Optional<Categoria> buscarPorId(Integer id);
+    Optional<Categoria> buscarPorId(Long id);
 
-    void excluir(Integer id);
+    void excluir(Long id);
 
     List<Categoria> listarTodos();
 

@@ -19,6 +19,8 @@ import edu.daisquina.dominio.Cliente;
 import edu.daisquina.dominio.ItemPedido;
 import edu.daisquina.dominio.Mercadoria;
 import edu.daisquina.dominio.Pedido;
+import edu.daisquina.dtos.RequestClienteDTO;
+import edu.daisquina.dtos.ResponseClienteDTO;
 import edu.daisquina.service.CarrinhoService;
 import edu.daisquina.service.CategoriaService;
 import edu.daisquina.service.ClienteService;
@@ -40,7 +42,6 @@ public class Pedido_Test {
         pedidoService = new PedidoService();
         categoriaService = new CategoriaService();
         this.carrinhoService = new CarrinhoService(carrinhoPersistencia, clientePersistencia);
-        this.clienteService = new ClienteService(clientePersistencia);
     }
 
     @Test
@@ -49,24 +50,27 @@ public class Pedido_Test {
     @Test
     public void UmPedidoDeveSerCriado(){
 
-        Cliente cliente = criarCliente();
+        RequestClienteDTO request = new RequestClienteDTO("Afonso", "af@gmail.com", "123456a");
+
+        ResponseClienteDTO cliente =  clienteService.criar(request);
+
 
         Categoria categoria = criarCategoria();
 
-        Mercadoria mesa = new Mercadoria(1, "Mesa de madeira", "Mesa de madeira de cedro", categoria, 365.21);
+        Mercadoria mesa = new Mercadoria(1L, "Mesa de madeira", "Mesa de madeira de cedro", categoria, 365.21);
 
-        Mercadoria fogao = new Mercadoria(1, "Fogão 4 bocas", "É um fogão", categoria, 124.75);
+        Mercadoria fogao = new Mercadoria(1L, "Fogão 4 bocas", "É um fogão", categoria, 124.75);
 
-        Carrinho carrinho = carrinhoService.adicionar(cliente.getId(), fogao, 1);
-        carrinho = carrinhoService.adicionar(cliente.getId(), mesa, 1);
+        Carrinho carrinho = carrinhoService.adicionar(cliente.id(), fogao, 1);
+        carrinho = carrinhoService.adicionar(cliente.id(), mesa, 1);
 
-        Pedido pedidoCriado = pedidoService.criar(cliente, carrinho);
+        Pedido pedidoCriado = pedidoService.criar(request, carrinho);
 
         List<ItemPedido> itensPedido = new ArrayList<>();
 
         itensPedido = pedidoCriado.getMercadorias();
 
-        assertEquals(cliente.getNome(), pedidoCriado.getCliente().getNome());
+        assertEquals(cliente.nome(), pedidoCriado.getCliente().getNome());
         assertEquals(2, pedidoCriado.getTamanhoListaMercadorias());
         assertTrue(verificarSeMercadoriaExiste("Mesa de madeira", itensPedido));
         assertEquals(489.96, pedidoCriado.getValorTotal());
@@ -77,11 +81,13 @@ public class Pedido_Test {
     @Test
     public void UmPedidoNaoPodeSerCriadoSemUmProduto(){
 
-        Cliente cliente = criarCliente();
+        RequestClienteDTO request = new RequestClienteDTO("Afonso", "af@gmail.com", "123456a");
+
+        ResponseClienteDTO cliente =  clienteService.criar(request);
 
         assertThrows(NullPointerException.class, () ->{
 
-            pedidoService.criar(cliente, null);
+            pedidoService.criar(request, null);
 
         });
 
@@ -91,13 +97,16 @@ public class Pedido_Test {
     public void UmPedidoDeveSerExcluido(){
 
         Categoria categoria = criarCategoria();
-        Cliente cliente = criarCliente();
 
-        Mercadoria mercadoria = new Mercadoria(1, "Cadeira", "Para sentar", categoria, 89.80);
+        RequestClienteDTO request = new RequestClienteDTO("Afonso", "af@gmail.com", "123456a");
 
-        Carrinho carrinho = carrinhoService.adicionar(cliente.getId(), mercadoria, 1);
+        ResponseClienteDTO cliente =  clienteService.criar(request);
 
-        Pedido novoPedido = pedidoService.criar(cliente, carrinho);
+        Mercadoria mercadoria = new Mercadoria(1L, "Cadeira", "Para sentar", categoria, 89.80);
+
+        Carrinho carrinho = carrinhoService.adicionar(cliente.id(), mercadoria, 1);
+
+        Pedido novoPedido = pedidoService.criar(request, carrinho);
         pedidoService.excluir(novoPedido.getId());
 
         assertTrue(pedidoService.buscarPorId(novoPedido.getId()).isEmpty());
@@ -111,12 +120,6 @@ public class Pedido_Test {
         Categoria categoria = categoriaService.criar("qualquer");
 
         return categoria;
-    }
-
-    private Cliente criarCliente(){
-        Cliente cliente = clienteService.criar("Afonso", "af@email.com", "123456a");
-
-        return cliente;
     }
 
     private boolean verificarSeMercadoriaExiste(String nomeMercadoria, List<ItemPedido> listaItens){

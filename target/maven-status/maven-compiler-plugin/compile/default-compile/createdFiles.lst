@@ -1,3 +1,4 @@
+edu/daisquina/persistencia/entity/ClienteEntity.class
 edu/daisquina/repository/CarrinhoInterface.class
 edu/daisquina/service/ClienteService.class
 edu/daisquina/repository/PedidoRepository.class
@@ -7,7 +8,9 @@ edu/daisquina/service/CategoriaService.class
 edu/daisquina/repository/CategoriaInterface.class
 edu/daisquina/factories/pagamento/PagamentoInterface.class
 edu/daisquina/factories/metodosPagamento/CartaoPagamento.class
+edu/daisquina/mappers/ClienteMappers/ClienteEntityMapper.class
 edu/daisquina/dominio/Carrinho.class
+edu/daisquina/dtos/RequestClienteDTO.class
 edu/daisquina/service/PedidoService.class
 edu/daisquina/service/CarrinhoService.class
 edu/daisquina/controllers/MercadoriaController.class
@@ -19,8 +22,10 @@ edu/daisquina/dominio/ItemCarrinho.class
 edu/daisquina/dominio/Categoria.class
 edu/daisquina/service/PagamentoService.class
 edu/daisquina/controllers/CategoriaController.class
+edu/daisquina/mappers/ClienteMappers/ClienteMapper.class
 edu/daisquina/banco/PedidoPersistencia.class
 edu/daisquina/service/MercadoriaService.class
+edu/daisquina/persistencia/repositories/ClienteRepo.class
 edu/daisquina/banco/CarrinhoPersistencia.class
 edu/daisquina/repository/MercadoriaRepository.class
 edu/daisquina/enumeradores/StatusPagamento.class
@@ -29,7 +34,7 @@ edu/daisquina/banco/CategoriaPersistencia.class
 edu/daisquina/controllers/LoginController.class
 edu/daisquina/factories/metodosPagamento/PixPagamento.class
 edu/daisquina/banco/MercadoriaPersistencia.class
-edu/daisquina/entity/Cliente.class
+edu/daisquina/dtos/ResponseClienteDTO.class
 edu/daisquina/dominio/ItemPedido.class
 edu/daisquina/banco/ClientePersistencia.class
 edu/daisquina/dominio/Mercadoria.class

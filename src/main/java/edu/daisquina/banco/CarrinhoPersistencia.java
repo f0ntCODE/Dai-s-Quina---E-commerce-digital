@@ -13,11 +13,11 @@ import edu.daisquina.repository.CarrinhoInterface;
 @Component
 public class CarrinhoPersistencia implements CarrinhoInterface{
 
-    private Map<Integer, Carrinho> bancoCarrinho = new HashMap<>();
+    private Map<Long, Carrinho> bancoCarrinho = new HashMap<>();
 
     //criar carrinho
     @Override
-    public Carrinho criar(Integer id, Cliente cliente){
+    public Carrinho criar(Long id, Cliente cliente){
         
         Carrinho carrinho = new Carrinho(cliente);
 
@@ -28,14 +28,14 @@ public class CarrinhoPersistencia implements CarrinhoInterface{
     }
 
     @Override
-    public void excluir(int id) {
+    public void excluir(Long id) {
 
         bancoCarrinho.remove(id);
     
     }
 
     @Override
-    public Optional<Carrinho> buscarPorCliente(int clienteId) {
+    public Optional<Carrinho> buscarPorCliente(Long clienteId) {
 
         return Optional.ofNullable(bancoCarrinho.get(clienteId));
     

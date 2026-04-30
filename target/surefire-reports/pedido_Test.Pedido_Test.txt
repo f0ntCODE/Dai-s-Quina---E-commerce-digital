@@ -1,4 +1,16 @@
 -------------------------------------------------------------------------------
 Test set: pedido_Test.Pedido_Test
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.053 s -- in pedido_Test.Pedido_Test
+Tests run: 4, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 0.053 s <<< FAILURE! -- in pedido_Test.Pedido_Test
+pedido_Test.Pedido_Test.UmPedidoDeveSerExcluido -- Time elapsed: 0.033 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "edu.daisquina.service.ClienteService.criar(edu.daisquina.dtos.RequestClienteDTO)" because "this.clienteService" is null
+	at pedido_Test.Pedido_Test.UmPedidoDeveSerExcluido(Pedido_Test.java:103)
+
+pedido_Test.Pedido_Test.UmPedidoDeveSerCriado -- Time elapsed: 0.003 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "edu.daisquina.service.ClienteService.criar(edu.daisquina.dtos.RequestClienteDTO)" because "this.clienteService" is null
+	at pedido_Test.Pedido_Test.UmPedidoDeveSerCriado(Pedido_Test.java:55)
+
+pedido_Test.Pedido_Test.UmPedidoNaoPodeSerCriadoSemUmProduto -- Time elapsed: 0.004 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "edu.daisquina.service.ClienteService.criar(edu.daisquina.dtos.RequestClienteDTO)" because "this.clienteService" is null
+	at pedido_Test.Pedido_Test.UmPedidoNaoPodeSerCriadoSemUmProduto(Pedido_Test.java:86)
+

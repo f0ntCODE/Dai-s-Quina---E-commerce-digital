@@ -7,10 +7,10 @@ import edu.daisquina.dominio.Cliente;
 
 public interface CarrinhoInterface {
 
-    Carrinho criar(Integer id, Cliente cliente);
+    Carrinho criar(Long id, Cliente cliente);
 
-    void excluir(int id);
+    void excluir(Long id);
 
-    Optional<Carrinho> buscarPorCliente(int clienteId);
+    Optional<Carrinho> buscarPorCliente(Long clienteId);
 
 }

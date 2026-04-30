@@ -14,7 +14,7 @@ import edu.daisquina.repository.ClienteRepository;
 @Component
 public class ClientePersistencia implements ClienteRepository{
 
-    Map<Integer, Cliente> bancoCliente = new HashMap<>(); //banco de dados em memória
+    Map<Long, Cliente> bancoCliente = new HashMap<>(); //banco de dados em memória
 
     @Override
     public Cliente salvar(Cliente cliente) {
@@ -26,14 +26,14 @@ public class ClientePersistencia implements ClienteRepository{
     }
 
     @Override
-    public Optional<Cliente> buscarPorId(Integer id) {
+    public Optional<Cliente> buscarPorId(Long id) {
 
         return Optional.ofNullable(bancoCliente.get(id));
     
     }
 
     @Override
-    public void excluir(Integer id) {
+    public void excluir(Long id) {
         
         bancoCliente.remove(id);
 

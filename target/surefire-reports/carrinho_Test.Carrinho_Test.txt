@@ -1,4 +1,19 @@
 -------------------------------------------------------------------------------
 Test set: carrinho_Test.Carrinho_Test
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 s -- in carrinho_Test.Carrinho_Test
+Tests run: 4, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 0.026 s <<< FAILURE! -- in carrinho_Test.Carrinho_Test
+carrinho_Test.Carrinho_Test.deveRemoverItemDoCarrinho -- Time elapsed: 0.006 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "edu.daisquina.service.ClienteService.criar(edu.daisquina.dtos.RequestClienteDTO)" because "this.clienteService" is null
+	at carrinho_Test.Carrinho_Test.criarCliente(Carrinho_Test.java:122)
+	at carrinho_Test.Carrinho_Test.deveRemoverItemDoCarrinho(Carrinho_Test.java:78)
+
+carrinho_Test.Carrinho_Test.deveCriarCarrinhoEAdicionarItem -- Time elapsed: 0.005 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "edu.daisquina.service.ClienteService.criar(edu.daisquina.dtos.RequestClienteDTO)" because "this.clienteService" is null
+	at carrinho_Test.Carrinho_Test.criarCliente(Carrinho_Test.java:122)
+	at carrinho_Test.Carrinho_Test.deveCriarCarrinhoEAdicionarItem(Carrinho_Test.java:52)
+
+carrinho_Test.Carrinho_Test.naoPodeRemoverQuantidadeItemMaiorDaQueExisteNoCarrinho -- Time elapsed: 0.003 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "edu.daisquina.service.ClienteService.criar(edu.daisquina.dtos.RequestClienteDTO)" because "this.clienteService" is null
+	at carrinho_Test.Carrinho_Test.criarCliente(Carrinho_Test.java:122)
+	at carrinho_Test.Carrinho_Test.naoPodeRemoverQuantidadeItemMaiorDaQueExisteNoCarrinho(Carrinho_Test.java:102)
+

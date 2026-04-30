@@ -20,21 +20,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/api/carrinho")
 public class CarrinhoController {
 
-    private final ClienteService clienteService;
     private final MercadoriaService mercadoriaService;
     private final CarrinhoService carrinhoService;
 
     public CarrinhoController(CarrinhoService carrinhoService, ClienteService clienteService, MercadoriaService mercadoriaService){
 
-        this.clienteService = clienteService;
         this.mercadoriaService = mercadoriaService;
         this.carrinhoService = carrinhoService;
 
     }
 
     @PostMapping("/adicionar")
-    public ResponseEntity<?> adicionarAoCarrinho(@RequestParam int idCliente, 
-        @RequestParam int idMercadoria,
+    public ResponseEntity<?> adicionarAoCarrinho(@RequestParam Long idCliente, 
+        @RequestParam Long idMercadoria,
         @RequestParam int quantidade
     ){
 
@@ -52,7 +50,7 @@ public class CarrinhoController {
         return entity;
     }
 
-    private Optional<Mercadoria> buscarMercadoria(int id){
+    private Optional<Mercadoria> buscarMercadoria(Long id){
 
         return mercadoriaService.buscarPorId(id);
     }

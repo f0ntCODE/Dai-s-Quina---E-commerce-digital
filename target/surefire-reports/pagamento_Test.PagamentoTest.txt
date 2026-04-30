@@ -1,4 +1,22 @@
 -------------------------------------------------------------------------------
 Test set: pagamento_Test.PagamentoTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.023 s -- in pagamento_Test.PagamentoTest
+Tests run: 3, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 0.025 s <<< FAILURE! -- in pagamento_Test.PagamentoTest
+pagamento_Test.PagamentoTest.excecaoMeioPagamentoInvalido -- Time elapsed: 0.009 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown, expected: <java.lang.IllegalArgumentException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:158)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:68)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3223)
+	at pagamento_Test.PagamentoTest.excecaoMeioPagamentoInvalido(PagamentoTest.java:70)
+Caused by: java.lang.NullPointerException: Cannot invoke "edu.daisquina.service.ClienteService.criar(edu.daisquina.dtos.RequestClienteDTO)" because "this.clienteService" is null
+	at pagamento_Test.PagamentoTest.criarPedido(PagamentoTest.java:85)
+	at pagamento_Test.PagamentoTest.lambda$excecaoMeioPagamentoInvalido$0(PagamentoTest.java:72)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:54)
+	... 3 more
+
+pagamento_Test.PagamentoTest.pagamentoDeveSerAprovado -- Time elapsed: 0.005 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "edu.daisquina.service.ClienteService.criar(edu.daisquina.dtos.RequestClienteDTO)" because "this.clienteService" is null
+	at pagamento_Test.PagamentoTest.criarPedido(PagamentoTest.java:85)
+	at pagamento_Test.PagamentoTest.pagamentoDeveSerAprovado(PagamentoTest.java:56)
+

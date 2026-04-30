@@ -9,9 +9,9 @@ public interface ClienteRepository {
 
     Cliente salvar (Cliente cliente);
 
-    Optional<Cliente> buscarPorId(Integer id);
+    Optional<Cliente> buscarPorId(Long id);
 
-    void excluir(Integer id);
+    void excluir(Long id);
 
     List<Cliente> listarTodos();
 

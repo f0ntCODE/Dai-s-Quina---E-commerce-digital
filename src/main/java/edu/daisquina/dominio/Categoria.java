@@ -2,10 +2,10 @@ package edu.daisquina.dominio;
 
 public class Categoria {
 
-    private int id;
+    private Long id;
     private String nome;
 
-    public Categoria(int id, String nome){
+    public Categoria(Long id, String nome){
         
         if(nome.isEmpty() || nome.equals(null)){
             throw new IllegalArgumentException("Nome de categoria inválido");
@@ -28,15 +28,17 @@ public class Categoria {
         return nome;
     }
 
-    public int getId(){
+    public Long getId(){
         return id;
     }
+
+    
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((nome == null) ? 0 : nome.hashCode());
         return result;
     }
@@ -50,7 +52,10 @@ public class Categoria {
         if (getClass() != obj.getClass())
             return false;
         Categoria other = (Categoria) obj;
-        if (id != other.id)
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
             return false;
         if (nome == null) {
             if (other.nome != null)

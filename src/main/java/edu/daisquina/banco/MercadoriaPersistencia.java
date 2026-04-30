@@ -11,7 +11,7 @@ import edu.daisquina.repository.MercadoriaRepository;
 
 public class MercadoriaPersistencia implements MercadoriaRepository{
 
-    private Map<Integer, Mercadoria> bancoMercadoria = new HashMap<>();
+    private Map<Long, Mercadoria> bancoMercadoria = new HashMap<>();
 
     @Override
     public Mercadoria salvar(Mercadoria mercadoria) {
@@ -23,14 +23,14 @@ public class MercadoriaPersistencia implements MercadoriaRepository{
     }
 
     @Override
-    public Optional<Mercadoria> buscarPorId(Integer id) {
+    public Optional<Mercadoria> buscarPorId(Long id) {
         
         return Optional.ofNullable(bancoMercadoria.get(id));
     
     }
 
     @Override
-    public void excluir(Integer id) {
+    public void excluir(Long id) {
         
         bancoMercadoria.remove(id);
     }

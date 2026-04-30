@@ -4,7 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.daisquina.dominio.Cliente;
+import edu.daisquina.dtos.RequestClienteDTO;
+import edu.daisquina.dtos.ResponseClienteDTO;
 import edu.daisquina.service.ClienteService;
 
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,9 @@ public class LoginController{
         @RequestParam String email,
         @RequestParam String senha
     ) {
-        Cliente clienteNovo = clienteService.criar(nome, email, senha);
+
+        RequestClienteDTO request = new RequestClienteDTO(nome, email, senha);
+        ResponseClienteDTO clienteNovo = clienteService.criar(request);
         
         return ResponseEntity.ok(clienteNovo.toString());
     }

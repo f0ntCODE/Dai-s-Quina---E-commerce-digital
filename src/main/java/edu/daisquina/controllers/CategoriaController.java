@@ -40,7 +40,7 @@ public class CategoriaController {
 
     @PostMapping("/editar/{categoriaID}")
     public ResponseEntity<String> editarMercadoria(@RequestParam String novoNomeCategoria,
-                                                    @PathVariable int categoriaID
+                                                    @PathVariable Long categoriaID
 ){
 
         Categoria categoria = categoriaService.editar(categoriaID, novoNomeCategoria);
@@ -50,7 +50,7 @@ public class CategoriaController {
     }
 
     @PostMapping("/excluir/{categoriaID}")
-    public ResponseEntity<String> excluirCategoria(@PathVariable int categoriaID) {
+    public ResponseEntity<String> excluirCategoria(@PathVariable Long categoriaID) {
         
         categoriaService.excluir(categoriaID);
         
@@ -58,7 +58,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/buscar/{idCategoria}")
-    public ResponseEntity<?> buscarPorId(@PathVariable int idCategoria) {
+    public ResponseEntity<?> buscarPorId(@PathVariable Long idCategoria) {
 
         Optional<Categoria> categoria = categoriaService.buscarPorId(idCategoria);
 

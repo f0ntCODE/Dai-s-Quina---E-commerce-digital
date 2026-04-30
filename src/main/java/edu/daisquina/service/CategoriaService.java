@@ -12,11 +12,11 @@ public class CategoriaService {
 
     private final CategoriaPersistencia categoriaPersistencia;
 
-    private int id;
+    private Long id;
 
     public CategoriaService(){
         
-        this.id = 0;
+        this.id = 0L;
         categoriaPersistencia = new CategoriaPersistencia();
 
     }
@@ -32,7 +32,7 @@ public class CategoriaService {
 
     }
 
-    public Categoria editar(int id, String nome){
+    public Categoria editar(Long id, String nome){
         
         Categoria categoriaEncontrada = categoriaPersistencia.buscarPorId(id)
         .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
@@ -43,14 +43,14 @@ public class CategoriaService {
 
     }
 
-    public void excluir(int id){
+    public void excluir(Long id){
         if(buscarPorId(id).isEmpty()){throw new RuntimeException("Categoria não encontrada");}
 
         categoriaPersistencia.excluir(id);
 
     }
 
-    public Optional<Categoria> buscarPorId(int id) throws RuntimeException{
+    public Optional<Categoria> buscarPorId(Long id) throws RuntimeException{
 
         return categoriaPersistencia.buscarPorId(id);
 

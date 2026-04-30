@@ -11,7 +11,7 @@ import edu.daisquina.repository.CategoriaInterface;
 
 public class CategoriaPersistencia implements CategoriaInterface{
 
-    private Map<Integer, Categoria> bancoCategoria = new HashMap<>();
+    private Map<Long, Categoria> bancoCategoria = new HashMap<>();
 
     @Override
     public Categoria salvar(Categoria categoria) {
@@ -23,14 +23,14 @@ public class CategoriaPersistencia implements CategoriaInterface{
     }
 
     @Override
-    public Optional<Categoria> buscarPorId(Integer id) {
+    public Optional<Categoria> buscarPorId(Long id) {
         
         return Optional.ofNullable(bancoCategoria.get(id));
 
     }
 
     @Override
-    public void excluir(Integer id) {
+    public void excluir(Long id) {
         
         bancoCategoria.remove(id);
 

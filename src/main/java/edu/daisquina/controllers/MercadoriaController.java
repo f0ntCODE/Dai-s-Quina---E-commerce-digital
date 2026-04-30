@@ -34,7 +34,7 @@ public class MercadoriaController {
     @PostMapping("/criar")
     public ResponseEntity<?> criarMercadoria(@RequestParam String nomeMercadoria,
         @RequestParam String descricaoMercadoria,
-        @RequestParam int categoriaID,
+        @RequestParam Long categoriaID,
         @RequestParam double precoMercadoria
      ){
 
@@ -46,10 +46,10 @@ public class MercadoriaController {
     }
 
     @PostMapping("/editar/{mercadoriaID}")
-    public ResponseEntity<String> editarMercadoria(@PathVariable int mercadoriaID,
+    public ResponseEntity<String> editarMercadoria(@PathVariable Long mercadoriaID,
         @RequestParam String nomeMercadoria,
         @RequestParam String descricaoMercadoria,
-        @RequestParam int categoriaID,
+        @RequestParam Long categoriaID,
         @RequestParam double precoMercadoria
     ){
 
@@ -62,14 +62,14 @@ public class MercadoriaController {
     }
 
     @PostMapping("/excluir/{mercadoriaID}")
-    public ResponseEntity<String> excluirMercadoria(@PathVariable int mercadoriaID){
+    public ResponseEntity<String> excluirMercadoria(@PathVariable Long mercadoriaID){
         mercadoriaService.excluir(mercadoriaID);
         
         return ResponseEntity.ok("Excluído");
     }
 
     @GetMapping("/buscar/{mercadoriaID}")
-    public ResponseEntity<String> buscarMercadoria(@PathVariable int mercadoriaID) {
+    public ResponseEntity<String> buscarMercadoria(@PathVariable Long mercadoriaID) {
 
         Optional<Mercadoria> mercadoriaEncontrada = mercadoriaService.buscarPorId(mercadoriaID);
         
@@ -79,7 +79,7 @@ public class MercadoriaController {
 
     //método de utilidade
 
-    private Optional<Categoria> buscarCategoria(int categoriaID){
+    private Optional<Categoria> buscarCategoria(Long categoriaID){
 
         return categoriaService.buscarPorId(categoriaID);
     }

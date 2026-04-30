@@ -11,13 +11,13 @@ import edu.daisquina.dominio.Mercadoria;
 @Service
 public class MercadoriaService {
 
-    private int id;
+    private Long id;
 
     private final MercadoriaPersistencia mercadoriaPersistencia;
 
 
     public MercadoriaService(){
-        this.id = 0;
+        this.id = 0L;
         this.mercadoriaPersistencia = new MercadoriaPersistencia();
 
     }
@@ -35,14 +35,14 @@ public class MercadoriaService {
 
     }
 
-    public void excluir(int id){
+    public void excluir(Long id){
         Optional<Mercadoria> mercadoriaEncontrada = buscarPorId(id);
 
         mercadoriaPersistencia.excluir(mercadoriaEncontrada.get().getId());
 
     }
 
-    public Mercadoria editar(int id, String nome, String descricao, Categoria categoria,double valor){
+    public Mercadoria editar(Long id, String nome, String descricao, Categoria categoria,double valor){
         System.out.println("Editando infos da mercadoria");
 
         Mercadoria mercadoriaEncontrada = mercadoriaPersistencia.buscarPorId(id)
@@ -57,7 +57,7 @@ public class MercadoriaService {
         return mercadoriaEncontrada;
     }
 
-    public Optional<Mercadoria> buscarPorId(int id){
+    public Optional<Mercadoria> buscarPorId(Long id){
 
         return mercadoriaPersistencia.buscarPorId(id);
     

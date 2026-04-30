@@ -8,13 +8,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.daisquina.banco.CarrinhoPersistencia;
 import edu.daisquina.banco.ClientePersistencia;
 import edu.daisquina.dominio.Carrinho;
 import edu.daisquina.dominio.Categoria;
-import edu.daisquina.dominio.Cliente;
 import edu.daisquina.dominio.Mercadoria;
+import edu.daisquina.dtos.RequestClienteDTO;
+import edu.daisquina.dtos.ResponseClienteDTO;
 import edu.daisquina.service.CarrinhoService;
 import edu.daisquina.service.CategoriaService;
 import edu.daisquina.service.ClienteService;
@@ -23,7 +25,10 @@ import edu.daisquina.service.MercadoriaService;
 public class Carrinho_Test {
 
     private CarrinhoService carrinhoService;
+
+    @Autowired
     private ClienteService clienteService;
+
     private MercadoriaService mercadoriaService;
     private CategoriaService categoriaService;
 
@@ -33,8 +38,6 @@ public class Carrinho_Test {
         CarrinhoPersistencia carrinhoPersistencia = new CarrinhoPersistencia();
 
         this.carrinhoService = new CarrinhoService(carrinhoPersistencia, clientePersistencia);
-        this.clienteService = new ClienteService(clientePersistencia);
-
         this.mercadoriaService = new MercadoriaService();
         this.categoriaService = new CategoriaService();
     }
@@ -46,13 +49,13 @@ public class Carrinho_Test {
     @DisplayName("Deve criar carrinho e adicionar item corretamente")
     void deveCriarCarrinhoEAdicionarItem(){
 
-        Cliente cliente = clienteService.criar("Afonso", "af@email.com", "123456a");
+        ResponseClienteDTO cliente = criarCliente();
 
         Categoria categoria = categoriaService.criar("cozinha");
 
         Mercadoria fogao = mercadoriaService.criar("Fogão", "Fogão bom", categoria, 125.0);
 
-        Carrinho carrinho = carrinhoService.adicionar(cliente.getId(), fogao, 1);
+        Carrinho carrinho = carrinhoService.adicionar(cliente.id(), fogao, 1);
 
         // valida criação
         assertNotNull(carrinho);
@@ -61,7 +64,7 @@ public class Carrinho_Test {
         assertEquals(1, carrinho.listarTodos().size());
 
         // adiciona novamente
-        carrinhoService.adicionar(cliente.getId(), fogao, 1);
+        carrinhoService.adicionar(cliente.id(), fogao, 1);
 
         // valida regra de soma de quantidade
         assertEquals(1, carrinho.listarTodos().size());
@@ -72,21 +75,21 @@ public class Carrinho_Test {
     @DisplayName("Deve remover um item do carrinho")
     void deveRemoverItemDoCarrinho(){
 
-        Cliente cliente = clienteService.criar("Afonso", "af@email.com", "123456a");
+        ResponseClienteDTO cliente = criarCliente();
 
         Categoria categoria = categoriaService.criar("cozinha");
 
         Mercadoria fogao = mercadoriaService.criar("Fogão", "Fogão bom", categoria, 125.0);
 
-        Carrinho carrinho = carrinhoService.adicionar(cliente.getId(), fogao, 2);
+        Carrinho carrinho = carrinhoService.adicionar(cliente.id(), fogao, 2);
 
         assertEquals(2, carrinho.listarTodos().iterator().next().getQuantidade());
 
-        carrinhoService.remover(cliente.getId(), fogao, 1);
+        carrinhoService.remover(cliente.id(), fogao, 1);
 
         assertEquals(1, carrinho.listarTodos().iterator().next().getQuantidade());
 
-        carrinho = carrinhoService.remover(cliente.getId(), fogao, 1);
+        carrinho = carrinhoService.remover(cliente.id(), fogao, 1);
 
         assertTrue(carrinho.listarTodos().isEmpty());
 
@@ -96,19 +99,27 @@ public class Carrinho_Test {
     @DisplayName("Não é possível remover um número maior do que a que existe no carrinho")
     void naoPodeRemoverQuantidadeItemMaiorDaQueExisteNoCarrinho(){
 
-         Cliente cliente = clienteService.criar("Afonso", "af@email.com", "123456a");
+         ResponseClienteDTO cliente = criarCliente();
 
         Categoria categoria = categoriaService.criar("cozinha");
 
         Mercadoria fogao = mercadoriaService.criar("Fogão", "Fogão bom", categoria, 125.0);
 
-        carrinhoService.adicionar(cliente.getId(), fogao, 2);
+        carrinhoService.adicionar(cliente.id(), fogao, 2);
 
         assertThrows(IllegalArgumentException.class, () ->
         
-            carrinhoService.remover(cliente.getId(), fogao, 3)
+            carrinhoService.remover(cliente.id(), fogao, 3)
 
         );
+
+    }
+
+    //método helper
+    private ResponseClienteDTO criarCliente(){
+        RequestClienteDTO request = new RequestClienteDTO("Afonso", "af@email.com", "123456a");
+
+        return clienteService.criar(request);
 
     }
 
